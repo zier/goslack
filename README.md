@@ -25,7 +25,7 @@ slack := New("yourSlackUrlHook", "yourName", ":yourIconEmoji:", "#john")
 
 ###Example Set
 
-method set data before send message
+you can overide data by method set before send message
 
 `
 slack.SetChannel("@john").SetMessage("Hello World").Send()
