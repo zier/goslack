@@ -31,10 +31,6 @@ func New(url, username, icon, channel string) (*SlackService, error) {
 		icon = ":smile_cat:"
 	}
 
-	if channel == "" {
-		channel = "#general"
-	}
-
 	return &SlackService{
 		WebhookURL: url,
 		Username:   username,
@@ -91,5 +87,8 @@ func (slack *SlackService) Send() error {
 }
 
 func (slack *SlackService) buildTextJSON() string {
-	return fmt.Sprintf(`{"text": "%s", "username":"%s", "icon_emoji":"%s", "channel":"%s"}`, slack.Message, slack.Username, slack.Icon, slack.Channel)
+	if slack.Channel != "" {
+		return fmt.Sprintf(`{"text": "%s", "username":"%s", "icon_emoji":"%s", "channel":"%s"}`, slack.Message, slack.Username, slack.Icon, slack.Channel)
+	}
+	return fmt.Sprintf(`{"text": "%s", "username":"%s", "icon_emoji":"%s"}`, slack.Message, slack.Username, slack.Icon)
 }

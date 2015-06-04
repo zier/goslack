@@ -18,6 +18,11 @@ if you want to send to user you can set
 slack := New("yourSlackUrlHook", "yourName", ":yourIconEmoji:", "#john")
 `
 
+if you set channel to empty string goslack will send message to channel follow by your webhook url channel by default
+`
+slack := New("yourSlackUrlHook", "yourName", ":yourIconEmoji:", "")
+`
+
 ###Example Send Message
 `
 	slack.SetMessage("Hello World").Send()
