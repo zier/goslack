@@ -1,8 +1,8 @@
 # goslack
 
-golang api for send message to slack
+golang api use slack web hook for send message to slack
  
-you can read more slack api -> [slack doc api](https://api.slack.com)
+you can read more webhook slack api -> [doc](https://api.slack.com/incoming-webhooks)
 
 ###Example New
 
