@@ -19,8 +19,20 @@ type SlackService struct {
 }
 
 func New(url, username, icon, channel string) (*SlackService, error) {
-	if url == "" || username == "" || icon == "" || channel == "" {
-		return nil, errors.New("invalid data")
+	if url == "" {
+		return nil, errors.New("invalid url")
+	}
+
+	if username == "" {
+		username = "BOT"
+	}
+
+	if icon == "" {
+		icon = ":smile_cat:"
+	}
+
+	if channel == "" {
+		channel = "#general"
 	}
 
 	return &SlackService{
