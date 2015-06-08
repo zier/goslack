@@ -27,10 +27,6 @@ func New(url, username, icon, channel string) (*SlackService, error) {
 		username = "BOT"
 	}
 
-	if icon == "" {
-		icon = ":smile_cat:"
-	}
-
 	return &SlackService{
 		WebhookURL: url,
 		Username:   username,
