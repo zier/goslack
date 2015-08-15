@@ -1,15 +1,8 @@
 # goslack
 
 ###Features
-- Send message to slack (WebHook)
-- Get history messages from channel (SlackAPI)
- 
-
-###About slack api 
-
-webhook          -> [doc](https://api.slack.com/incoming-webhooks)
-
-channels.history -> [doc](https://api.slack.com/methods/channels.history)
+- Send message to slack ([WebHook](https://api.slack.com/incoming-webhooks))
+- Get history messages from channel ([SlackAPI](https://api.slack.com/methods/channels.history))
 
 ###Example New
 
