@@ -1,90 +1,49 @@
 package goslack
 
 import (
-	"bytes"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/http"
-	"net/url"
 	"strconv"
+	"strings"
+	"time"
 )
 
+// SlackService
 type SlackService struct {
+	Token      string
 	WebhookURL string
-	Username   string
-	Icon       string
-	Channel    string
-	Message    string
+	HTTPClient *http.Client
 }
 
-func New(url, username, icon, channel string) (*SlackService, error) {
-	if url == "" {
-		return nil, errors.New("invalid url")
+// New SlackService
+func New(webhookURL, token string, httpClient *http.Client) (*SlackService, error) {
+	if webhookURL == "" {
+		return nil, errors.New("invalid webhookURL")
 	}
 
-	if username == "" {
-		username = "BOT"
+	if httpClient == nil {
+		httpClient = &http.Client{}
 	}
 
 	return &SlackService{
-		WebhookURL: url,
-		Username:   username,
-		Icon:       icon,
-		Channel:    channel,
+		WebhookURL: webhookURL,
+		Token:      token,
+		HTTPClient: httpClient,
 	}, nil
 }
 
-func (slack *SlackService) SetIcon(icon string) *SlackService {
-	slack.Icon = icon
-	return slack
+// ParseTime parse timestamp from slack
+func (slack *SlackService) ParseTime(timeStamp string) time.Time {
+	t := strings.Split(timeStamp, ".")
+	timestamp, _ := strconv.ParseInt(t[0], 10, 64)
+
+	return time.Unix(timestamp, 0)
 }
 
-func (slack *SlackService) SetChannel(channel string) *SlackService {
-	slack.Channel = channel
-	return slack
-}
-
-func (slack *SlackService) SetUsername(username string) *SlackService {
-	slack.Username = username
-	return slack
-}
-
-func (slack *SlackService) SetMessage(message string) *SlackService {
-	slack.Message = message
-	return slack
-}
-
-func (slack *SlackService) Send() error {
-	urlRequest := slack.WebhookURL
-	data := url.Values{}
-	data.Set("payload", slack.buildTextJSON())
-
-	client := &http.Client{}
-	r, err := http.NewRequest("POST", urlRequest, bytes.NewBufferString(data.Encode()))
-	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	r.Header.Add("Content-Length", strconv.Itoa(len(data.Encode())))
-
-	if err != nil {
-		return err
+func (slack *SlackService) buildTextJSON(message, channel string) string {
+	if channel != "" {
+		return fmt.Sprintf(`{"text": "%s", "channel":"%s"}`, message, channel)
 	}
-
-	resp, err := client.Do(r)
-	if err != nil {
-		return err
-	}
-
-	if resp.StatusCode != 200 {
-		respText, _ := ioutil.ReadAll(resp.Body)
-		return errors.New(string(respText))
-	}
-
-	return nil
-}
-
-func (slack *SlackService) buildTextJSON() string {
-	if slack.Channel != "" {
-		return fmt.Sprintf(`{"text": "%s", "username":"%s", "icon_emoji":"%s", "channel":"%s"}`, slack.Message, slack.Username, slack.Icon, slack.Channel)
-	}
-	return fmt.Sprintf(`{"text": "%s", "username":"%s", "icon_emoji":"%s"}`, slack.Message, slack.Username, slack.Icon)
+	return fmt.Sprintf(`{"text": "%s"}`, message)
 }
