@@ -33,14 +33,14 @@ slack.Send("Hello World","#game")
 ###Example get message from channel
 you can read more about response message value in document channels.history
 
-`
-// HistoryResponse response from slack
+```
+//HistoryResponse response from slack
 type HistoryResponse struct {
 	Ok       bool
 	Messages []map[string]string
 	HasMore  string
 }
-`
+```
 
 `
 resp, err := slack.GetHistoryFromChannel("CHANNELID", startDate, endDate, limit)
