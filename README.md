@@ -1,6 +1,8 @@
 # goslack
 
-golang api overide data slack web hook for send message and get history message from channel
+###Features
+- Send message to slack (WebHook)
+- Get history messages from channel (SlackAPI)
  
 
 ###About slack api 
