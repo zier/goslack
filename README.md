@@ -1,37 +1,47 @@
 # goslack
 
-golang api overide data slack web hook for send message
+golang api overide data slack web hook for send message and get history message from channel
  
-you can read more webhook slack api -> [doc](https://api.slack.com/incoming-webhooks)
+
+###About slack api 
+
+webhook          -> [doc](https://api.slack.com/incoming-webhooks)
+
+channels.history -> [doc](https://api.slack.com/methods/channels.history)
 
 ###Example New
 
 
 `
-	slack := New("yourSlackUrlHook", "yourName", ":yourIconEmoji:", "#yourChannel")
+	slack := New("yourSlackUrlHook", "yourSlackToken", nil)
 `
 
 
-if you want to send to user you can set 
 
+###Example send message (use default channel in webhook setting)
 `
-slack := New("yourSlackUrlHook", "yourName", ":yourIconEmoji:", "#john")
-`
-
-if you set channel to empty string goslack will send message to channel follow by your webhook url channel by default
-`
-slack := New("yourSlackUrlHook", "yourName", ":yourIconEmoji:", "")
+	slack.Send("Hello World","")
 `
 
-###Example Send Message
-`
-	slack.SetMessage("Hello World").Send()
-`
 
-###Example Set
-
-you can overide data by method set before send message
+###Example send with channel
 
 `
-slack.SetChannel("@john").SetMessage("Hello World").Send()
+slack.Send("Hello World","#game")
+`
+
+###Example get message from channel
+you can read more about response message value in document channels.history
+
+`
+// HistoryResponse response from slack
+type HistoryResponse struct {
+	Ok       bool
+	Messages []map[string]string
+	HasMore  string
+}
+`
+
+`
+resp, err := slack.GetHistoryFromChannel("CHANNELID", startDate, endDate, limit)
 `

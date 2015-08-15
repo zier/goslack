@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-// SlackService
+// SlackService struct
 type SlackService struct {
 	Token      string
 	WebhookURL string
