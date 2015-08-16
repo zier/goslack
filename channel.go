@@ -15,6 +15,7 @@ type HistoryResponse struct {
 	Ok       bool
 	Messages []map[string]string
 	HasMore  string
+	Error    string
 }
 
 // GetHistoryFromChannel get history messages from channel
