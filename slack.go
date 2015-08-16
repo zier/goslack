@@ -1,7 +1,6 @@
 package goslack
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -18,10 +17,6 @@ type SlackService struct {
 
 // New SlackService
 func New(webhookURL, token string, httpClient *http.Client) (*SlackService, error) {
-	if webhookURL == "" {
-		return nil, errors.New("invalid webhookURL")
-	}
-
 	if httpClient == nil {
 		httpClient = &http.Client{}
 	}
