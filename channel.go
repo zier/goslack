@@ -49,6 +49,6 @@ func (slack *SlackService) GetHistoryFromChannel(channelID string, startDate tim
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(&hr)
+
 	return hr, nil
 }
