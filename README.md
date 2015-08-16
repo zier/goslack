@@ -40,3 +40,5 @@ type HistoryResponse struct {
 `
 resp, err := slack.GetHistoryFromChannel("CHANNELID", startDate, endDate, limit)
 `
+
+* you can find your channel id [here](https://api.slack.com/methods/channels.list)
