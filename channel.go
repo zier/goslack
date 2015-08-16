@@ -13,8 +13,8 @@ import (
 // HistoryResponse response from slack
 type HistoryResponse struct {
 	Ok       bool
-	Messages []map[string]string
-	HasMore  string
+	Messages []map[string]interface{}
+	HasMore  bool
 	Error    string
 }
 
@@ -49,6 +49,6 @@ func (slack *SlackService) GetHistoryFromChannel(channelID string, startDate tim
 	if err != nil {
 		return nil, err
 	}
-
+	fmt.Println(&hr)
 	return hr, nil
 }
