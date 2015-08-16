@@ -5,6 +5,7 @@
 - Get history messages from channel ([SlackAPI](https://api.slack.com/methods/channels.history))
 
 ###Example New
+if you want only get message from channel don't want to send to you can empty string to url web hook
 
 
 `
